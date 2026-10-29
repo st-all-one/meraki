@@ -1,0 +1,15 @@
+# Produção: TLS no LB externo, Caddy local preserva XFF/XFP do LB.
+# `PROD_APP_URL` no .env deve ser a origem pública exata (https://...).
+services:
+  app:
+    environment:
+      APP_ENV: production
+      APP_URL: ${PROD_APP_URL:?defina PROD_APP_URL no .env}
+      SEED_ON_BOOT: "false"
+      HOST: 0.0.0.0
+      PORT: "50300"
+    restart: always
+
+  caddy:
+    volumes:
+      - ./app/docker/caddy/Caddyfile.prod:/etc/caddy/Caddyfile:ro

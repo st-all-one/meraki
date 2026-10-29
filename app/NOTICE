@@ -1,0 +1,19 @@
+Meraki
+Copyright 2026 Meraki contributors
+
+Este produto é derivado do Somlos (https://github.com/st-all-one/somlos), commit
+96ade82, licenciado sob Apache-2.0. O código original foi cortado e reescrito
+para o domínio de gestão de demandas.
+
+Dependências com licença própria:
+- Hono (MIT)
+- Kysely (MIT) — usado no baseline; a versão Meraki usa node:sqlite.
+- HTMX (BSD 2-Clause)
+- daisyUI (MIT) — conceitos de design; o CSS Meraki é próprio.
+- Lucide (ISC) — ícones; os ícones Meraki são próprios.
+- Excalidraw (MIT), React (MIT) — canvas colaborativo.
+- markdown-it (MIT)
+- @noble/hashes (MIT)
+- @negrel/webpush (MIT)
+
+Consulte os arquivos LICENSE dos pacotes instalados para o texto completo.

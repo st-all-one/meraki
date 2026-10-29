@@ -22,3 +22,16 @@ rustc-ice-*.txt
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Meraki — runtime local/Docker
+.env
+.env.*
+!.env.example
+data/
+app/data/
+app/dist/
+app/node_modules/
+app/static/whiteboard/
+app/e2e/node_modules/
+app/e2e/test-results/
+app/e2e/playwright-report/

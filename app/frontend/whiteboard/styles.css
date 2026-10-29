@@ -1,0 +1,59 @@
+html,
+body,
+#whiteboard-root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.wb-shell {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: 42px 1fr;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+.wb-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-bottom: 1px solid #d9dee7;
+  background: #fff;
+  color: #172033;
+  font-size: 13px;
+}
+.wb-bar button {
+  min-height: 30px;
+  border: 1px solid #d9dee7;
+  background: #fff;
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+.wb-presence {
+  display: inline-flex;
+  gap: 3px;
+}
+.wb-person {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+.wb-status {
+  color: #667085;
+  font-size: 11px;
+}
+.wb-spacer {
+  flex: 1;
+}
+.wb-canvas {
+  min-height: 0;
+}
+.wb-loading {
+  padding: 20px;
+  color: #667085;
+}
