@@ -176,6 +176,27 @@ function base64UrlDecode(value: string): Uint8Array {
   return Uint8Array.from(binary, (char) => char.charCodeAt(0));
 }
 
+Deno.mkdirSync(env.dataPath, { recursive: true, mode: 0o700 });
+const autoMigrate = (Deno.env.get("AUTO_MIGRATE") ?? "true") === "true";
+if (autoMigrate) {
+  const migrationDb = openDb();
+  try {
+    console.log(JSON.stringify(await migrate(migrationDb)));
+  } finally {
+    migrationDb.close();
+  }
+}
+const seedOnBoot = (Deno.env.get("SEED_ON_BOOT") ?? "true") === "true";
+if (!env.isProduction && seedOnBoot) {
+  const seedDb = openDb();
+  try {
+    await migrate(seedDb);
+    console.log(JSON.stringify(seed(seedDb)));
+  } finally {
+    seedDb.close();
+  }
+}
+
 Deno.mkdirSync(join(env.dataPath, "attachments"), { recursive: true, mode: 0o700 });
 const runtime = await createRuntime();
 startPushTimer(runtime.db);

@@ -12,42 +12,49 @@ export const LoginPage: FC<{
   seedEmail: string;
 }> = ({ email = "", error, next, showSeed, seedEmail }) => (
   <Layout title="Entrar" actor={null}>
-    <div class="login-wrap">
-      <div class="login-card">
+    <div class="login-layout">
+      <aside class="login-aside" aria-hidden="true">
         <div class="login-brand">
           <span class="brand-mark">M</span> Meraki
         </div>
-        <h1>Entrar</h1>
-        <p class="muted">Índice de demandas, tarefas e conversas do time.</p>
-        {error ? <div class="alert alert-danger" role="alert">{error}</div> : null}
-        <form method="post" action="/login" class="section">
-          {next ? <input type="hidden" name="next" value={next} /> : null}
-          <Field
-            label="E-mail"
-            name="email"
-            type="email"
-            value={email}
-            autocomplete="username"
-            required
-            autofocus
-          />
-          <Field
-            label="Senha"
-            name="password"
-            type="password"
-            autocomplete="current-password"
-            required
-          />
-          <button class="btn btn-primary btn-block" type="submit">Entrar</button>
-        </form>
-        {showSeed
-          ? (
-            <p class="small muted small muted mt-16">
-              Desenvolvimento: <span class="mono">{seedEmail}</span> / senha do{" "}
-              <span class="mono">.env</span>
-            </p>
-          )
-          : null}
+        <h1 class="login-title">Índice de demandas</h1>
+        <p class="lede">
+          Tarefas oficiais, issues sugeridas, conversas e anexos do time em um só lugar.
+        </p>
+      </aside>
+      <div class="login-panel">
+        <div class="login-card">
+          <h2>Entrar</h2>
+          {error ? <div class="alert alert-danger" role="alert">{error}</div> : null}
+          <form method="post" action="/login" class="section">
+            {next ? <input type="hidden" name="next" value={next} /> : null}
+            <Field
+              label="E-mail"
+              name="email"
+              type="email"
+              value={email}
+              autocomplete="username"
+              required
+              autofocus
+            />
+            <Field
+              label="Senha"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+            <button class="btn btn-primary btn-block" type="submit">Entrar</button>
+          </form>
+          {showSeed
+            ? (
+              <p class="small muted mt-16">
+                Desenvolvimento: <span class="mono">{seedEmail}</span> / senha do{" "}
+                <span class="mono">.env</span>
+              </p>
+            )
+            : null}
+        </div>
       </div>
     </div>
   </Layout>

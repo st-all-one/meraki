@@ -45,6 +45,7 @@ kd ask --id <ID>                           # full body of a note
 kd ask --anchor src/x.rs                   # by file, no query
 kd ask --around <ID> [--via <EDGE>]        # expand the graph
 kd ask --suggest [--relation R]            # semantic suggestions
+kd ask --agent <name> [--activity A]       # filter by provenance (who produced the note)
 kd write --summary "<s>" [<body>|-] --type <fact|decision|error|risk|question>
         [--tag T] [--anchor P]
 kd write --update <ID> --summary "<s>"     # versioned update (new id + supersede)
@@ -60,6 +61,7 @@ kd doctor [--fix] [--explain]              # base health
 kd map [--axis A] [--communities]          # knowledge map
 kd maintenance <learn|compact|prune>       # proposes only (read-only)
 kd drain [--status | --digest [--force]]   # embedding queue: state / process
+kd ai --memory|--session ["<q>"]  # another agent's memory/log (read-only JSONL)
 kd sync [--message M]                      # commit notas/ + eventos/
 ```
 
@@ -73,6 +75,27 @@ alone), `issue` is optional, `task` is the leaf. `--scope` sets the level
 Anchoring the root epic is strongly recommended (`kd doctor` warns without it). Parent is any
 ancestor with a strictly lower rank, so `epic → task` directly is valid. Closing requires an
 `--outcome`; `kd task show`/`close` report the epic rollup (`done/total`).
+
+## Agent memory (`kd ai`, D220/D221/D222)
+
+Another agent's memory/log is consulted **read-only** through a **source**: NDJSON shards of notes
+(`{"frontmatter": …, "body": …}`, the knudge schema), one `<agent_id>.jsonl` per writer. The agent
+owns the store; the knudge only indexes it — never a second truth.
+
+kd ai --memory              # list the agent's memory (id|type|statement)
+kd ai --memory "<q>"        # recall in .knudge/ai/memory/<agent_id>.jsonl
+kd ai --session "<q>"       # recall in the agent's projection of its log (activity=derive)
+kd ai --memory --source /tmp/shards "<q>"    # explicit file or directory
+kd ai --memory --sort time --agent-role subagent "<q>"   # temporal order / identity filter
+kd ai --session --recap     # compact recap (last decision/verification/error, files, commands)
+kd rewind --with-activity   # handoff + recent agent activity appendix
+
+No query lists; with a query it recalls (`[no_results]` when empty). A malformed line is skipped
+with a `warning` naming the shard (never fails). JSON exposes `created_at` and
+`agent`/`agent_id`/`agent_role`/`parent_agent_id`. Writers append one complete JSON line per event
+(`O_APPEND`) and keep `created_at` monotonic per agent; identity lives in `provenance`. The knudge
+never reads `.agents/memory` and there is no migration command. To filter notes already in
+`notas/`, use `kd ask --agent NAME` / `--activity NAME` / `--agent-id ID` / `--agent-role ROLE`.
 
 ## Embeddings (derived, optional)
 
@@ -119,4 +142,4 @@ stdout = data, stderr = logs. `--json` =
 - Editing `notas/` by hand — use `kd write --update`.
 - Expecting `learn`/`compact`/`prune` to change the corpus — they only propose.
 
-<!-- knudge:skill:version: 3 -->
+<!-- knudge:skill:version: 6 -->

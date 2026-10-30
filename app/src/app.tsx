@@ -44,6 +44,12 @@ export function createApp(runtime: Runtime): Hono<AppEnv> {
     await next();
   });
   securityHeaders(app);
+  app.use("/static/*", async (c, next) => {
+    await next();
+    if (!c.res.headers.get("Cache-Control")) {
+      c.header("Cache-Control", "public, max-age=31536000, immutable");
+    }
+  });
   app.use("/static/*", serveStatic({ root: APP_ROOT }));
 
   app.get("/sw.js", (c) =>

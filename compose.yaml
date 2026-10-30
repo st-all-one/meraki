@@ -42,8 +42,12 @@ x-app: &app
   healthcheck:
     test:
       [
-        "CMD-SHELL",
-        "deno eval --no-config --allow-net \"const r = await fetch('http://127.0.0.1:50300/healthz'); if (!r.ok) Deno.exit(1);\"",
+        "CMD",
+        "/bin/deno",
+        "eval",
+        "--no-config",
+        "--allow-net",
+        "const r = await fetch('http://127.0.0.1:50300/healthz'); if (!r.ok) Deno.exit(1);",
       ]
     interval: 30s
     timeout: 10s

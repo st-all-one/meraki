@@ -227,13 +227,17 @@ export const Select: FC<{
       id={props.name}
       required={props.required}
       disabled={props.disabled}
+      aria-describedby={props.error ? `${props.name}-error` : undefined}
+      aria-invalid={props.error ? "true" : undefined}
     >
       {props.blank ? <option value="">{props.blank}</option> : null}
       {props.options.map((option) => (
         <option value={option.value} selected={option.value === props.value}>{option.label}</option>
       ))}
     </select>
-    {props.error ? <span class="field-error" role="alert">{props.error}</span> : null}
+    {props.error
+      ? <span id={`${props.name}-error`} class="field-error" role="alert">{props.error}</span>
+      : null}
   </label>
 );
 

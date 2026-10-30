@@ -155,9 +155,13 @@ export const ItemPage: FC<{
       </div>
       <h1 class="item-title">{item.title}</h1>
       {item.archived_at
-        ? <div class="alert">Esta demanda está arquivada. O link continua funcionando.</div>
+        ? (
+          <div class="alert" role="status">
+            Esta demanda está arquivada. O link continua funcionando.
+          </div>
+        )
         : null}
-      {props.ok ? <div class="alert alert-success">{props.ok}</div> : null}
+      {props.ok ? <div class="alert alert-success" role="status">{props.ok}</div> : null}
       <div class="item-grid">
         <div>
           <div class="tabs" role="tablist">
@@ -165,6 +169,7 @@ export const ItemPage: FC<{
               <a
                 class="tab"
                 role="tab"
+                aria-selected={tab.id === props.tab}
                 aria-current={tab.id === props.tab ? "page" : undefined}
                 href={tab.href}
               >

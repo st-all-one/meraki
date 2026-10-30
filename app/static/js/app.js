@@ -216,6 +216,8 @@
       if (!itemId) return;
       modal = document.createElement("div");
       modal.className = "canvas-modal";
+      modal.setAttribute("role", "dialog");
+      modal.setAttribute("aria-modal", "true");
       modal.innerHTML = `
         <div class="canvas-head">
           <strong>Canvas · ${document.title.split(" · ")[0]}</strong>
